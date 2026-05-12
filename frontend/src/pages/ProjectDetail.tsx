@@ -1,0 +1,179 @@
+import { useParams, Link } from 'react-router-dom'
+import {
+  ArrowLeft,
+  MapPin,
+  Building2,
+  Layers,
+  Calendar,
+  TrendingUp,
+  Sun,
+  Volume2,
+  Droplets,
+  Eye,
+  FileText,
+  Download,
+  Box,
+} from 'lucide-react'
+import { projects } from '../data/projects'
+import StatusBadge from '../components/StatusBadge'
+import ScoreCard from '../components/ScoreCard'
+import ThreeViewer from '../components/ThreeViewer'
+
+const FILE_TYPE_COLORS: Record<string, string> = {
+  PDF: 'text-red-400 bg-red-500/10 border-red-500/20',
+  DWG: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+  IFC: 'text-violet-400 bg-violet-500/10 border-violet-500/20',
+  XLSX: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+}
+
+export default function ProjectDetail() {
+  const { id } = useParams<{ id: string }>()
+  const project = projects.find((p) => p.id === id)
+
+  if (!project) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full gap-4">
+        <p className="text-gray-500">Prosjekt ikke funnet</p>
+        <Link to="/" className="text-blue-400 text-sm hover:underline">
+          Tilbake til oversikt
+        </Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className="p-8 max-w-6xl mx-auto">
+      {/* Breadcrumb */}
+      <Link
+        to="/"
+        className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-300 mb-6 transition-colors"
+      >
+        <ArrowLeft size={14} />
+        Tilbake til oversikt
+      </Link>
+
+      {/* Header */}
+      <div className="flex items-start justify-between mb-6">
+        <div>
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-2xl font-bold text-white tracking-tight">{project.name}</h1>
+            <StatusBadge status={project.status} />
+          </div>
+          <div className="flex items-center gap-1.5 text-gray-500 text-sm">
+            <MapPin size={13} />
+            <span>{project.address}</span>
+          </div>
+          <p className="text-sm text-gray-500 mt-2 max-w-xl leading-relaxed">{project.description}</p>
+        </div>
+        <div className="flex-none text-right">
+          <p className="text-2xl font-bold text-white">{project.investmentMNOK} MNOK</p>
+          <p className="text-xs text-gray-600 mt-0.5">Estimert investering</p>
+        </div>
+      </div>
+
+      {/* BIM stat row */}
+      <div className="grid grid-cols-5 gap-3 mb-6">
+        <BimStat icon={<Layers size={16} className="text-blue-400" />} label="Bruksareal" value={`${project.bra.toLocaleString('no')} m²`} />
+        <BimStat icon={<Building2 size={16} className="text-violet-400" />} label="Enheter" value={project.units.toString()} />
+        <BimStat icon={<Box size={16} className="text-amber-400" />} label="Etasjer" value={project.floors.toString()} />
+        <BimStat icon={<Calendar size={16} className="text-emerald-400" />} label="Ferdigstillelse" value={project.completionYear.toString()} />
+        <BimStat icon={<TrendingUp size={16} className="text-rose-400" />} label="Arealformål" value={project.zoningCode} />
+      </div>
+
+      {/* Zoning */}
+      <div className="bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
+        <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+        <span className="text-xs text-gray-400">
+          <span className="font-medium text-gray-300">Planstatus:</span> {project.zoningStatus}
+        </span>
+      </div>
+
+      {/* Main two-column section */}
+      <div className="grid grid-cols-2 gap-5 mb-6">
+        {/* Analysis */}
+        <div>
+          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+            Stedanalyse
+          </h2>
+          <div className="space-y-2">
+            <ScoreCard
+              score={project.analysis.sol.score}
+              label={project.analysis.sol.label}
+              description={project.analysis.sol.description}
+              icon={<Sun size={14} />}
+            />
+            <ScoreCard
+              score={project.analysis.støy.score}
+              label={project.analysis.støy.label}
+              description={project.analysis.støy.description}
+              icon={<Volume2 size={14} />}
+            />
+            <ScoreCard
+              score={project.analysis.flom.score}
+              label={project.analysis.flom.label}
+              description={project.analysis.flom.description}
+              icon={<Droplets size={14} />}
+            />
+            <ScoreCard
+              score={project.analysis.fjernvirkning.score}
+              label={project.analysis.fjernvirkning.label}
+              description={project.analysis.fjernvirkning.description}
+              icon={<Eye size={14} />}
+            />
+          </div>
+        </div>
+
+        {/* 3D viewer */}
+        <div>
+          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+            3D Massemodell
+          </h2>
+          <div className="h-[420px] bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+            <ThreeViewer project={project} />
+          </div>
+        </div>
+      </div>
+
+      {/* Documents */}
+      <div>
+        <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+          Dokumenter ({project.documents.length})
+        </h2>
+        <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
+          {project.documents.map((doc, i) => (
+            <div
+              key={i}
+              className={`flex items-center gap-4 px-4 py-3 hover:bg-gray-800/50 transition-colors cursor-pointer ${
+                i < project.documents.length - 1 ? 'border-b border-gray-800' : ''
+              }`}
+            >
+              <FileText size={15} className="text-gray-600 flex-none" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-gray-200 font-medium truncate">{doc.name}</p>
+                <p className="text-xs text-gray-600">{doc.date} · {doc.size}</p>
+              </div>
+              <span
+                className={`text-[10px] font-bold px-2 py-0.5 rounded border ${FILE_TYPE_COLORS[doc.type] || 'text-gray-400 bg-gray-800 border-gray-700'}`}
+              >
+                {doc.type}
+              </span>
+              <Download size={13} className="text-gray-700 hover:text-gray-400 transition-colors flex-none" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function BimStat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+  return (
+    <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+      <div className="flex items-center gap-2 mb-2">
+        {icon}
+        <span className="text-xs text-gray-500">{label}</span>
+      </div>
+      <p className="text-base font-bold text-white">{value}</p>
+    </div>
+  )
+}

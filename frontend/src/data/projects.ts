@@ -1,0 +1,188 @@
+import { Project } from '../types'
+
+export const projects: Project[] = [
+  {
+    id: 'bjørvika-havnefront',
+    name: 'Bjørvika Havnefront',
+    location: 'Oslo',
+    address: 'Operagata 14, 0150 Oslo',
+    coordinates: [59.9062, 10.7522],
+    status: 'regulering',
+    bra: 24500,
+    units: 185,
+    floors: 14,
+    zoningStatus: 'Reguleringsplan til offentlig ettersyn',
+    zoningCode: 'KBA-2',
+    description:
+      'Transformasjon av tidligere havneområde til mixed-use bebyggelse med boliger, næring og publikumsrettet bruk i første etasje. Prosjektet er del av den helhetlige utviklingen av Bjørvika-området.',
+    completionYear: 2027,
+    investmentMNOK: 480,
+    analysis: {
+      sol: {
+        score: 78,
+        label: 'Solforhold',
+        description: 'God soltilgang — 4.2 timer direktelys i desember. Sørvendte fasader. Noe skygge fra naboprosjekt mot øst.',
+      },
+      støy: {
+        score: 42,
+        label: 'Støybelastning',
+        description: 'Moderat støybelastning fra E18 og havneaktivitet. Støyskjerm planlagt langs Operagata.',
+      },
+      flom: {
+        score: 31,
+        label: 'Flomrisiko',
+        description: 'Noe flomrisiko ved 200-årsflom. Havnivåstigning på 0.5m innen 2100 vil påvirke kjelleretasje.',
+      },
+      fjernvirkning: {
+        score: 85,
+        label: 'Fjernvirkning',
+        description: 'Fremtredende posisjon i bybildet. Positiv bymessig fjernvirkning fra Ekebergåsen og Sørenga.',
+      },
+    },
+    documents: [
+      { name: 'Reguleringsplan rev. 3', type: 'PDF', date: '2024-09-12', size: '4.2 MB' },
+      { name: 'Sol- og skyggeanalyse Q3 2024', type: 'PDF', date: '2024-08-20', size: '8.7 MB' },
+      { name: 'ROS-analyse havnivå', type: 'PDF', date: '2024-07-05', size: '2.1 MB' },
+      { name: 'BIM-modell v2.3', type: 'IFC', date: '2024-10-01', size: '156 MB' },
+      { name: 'Trafikkanalyse', type: 'PDF', date: '2024-06-18', size: '5.3 MB' },
+    ],
+  },
+  {
+    id: 'kvadraturen-parkside',
+    name: 'Kvadraturen Parkside',
+    location: 'Kristiansand',
+    address: 'Markensgate 52, 4611 Kristiansand',
+    coordinates: [58.1468, 7.9956],
+    status: 'mulighetsstudie',
+    bra: 8200,
+    units: 64,
+    floors: 7,
+    zoningStatus: 'Mulighetsstudie — ikke regulert',
+    zoningCode: 'S-6',
+    description:
+      'Fortettingsprosjekt i Kristiansand sentrum med leiligheter og forretningslokaler i plan 1–2. Tomten er i dag regulert til sentrumsformål og krever ny detaljregulering.',
+    completionYear: 2029,
+    investmentMNOK: 165,
+    analysis: {
+      sol: {
+        score: 65,
+        label: 'Solforhold',
+        description: 'Akseptable solforhold. Noe begrensning fra eksisterende kvartalstruktur mot sør.',
+      },
+      støy: {
+        score: 58,
+        label: 'Støybelastning',
+        description: 'Middels støynivå fra Markensgate. Innendørs støynivå tilfredsstiller T-1442 med tiltak.',
+      },
+      flom: {
+        score: 22,
+        label: 'Flomrisiko',
+        description: 'Høy flomutsatthet ved ekstremnedbør — Otra-flom og overvannsproblematikk i kjellernivå.',
+      },
+      fjernvirkning: {
+        score: 70,
+        label: 'Fjernvirkning',
+        description: 'Godt synlig fra Sørlandssenteret og rv. 9. Byggehøyde tilpasset kvartalsstrukturen.',
+      },
+    },
+    documents: [
+      { name: 'Mulighetsstudie konsept A', type: 'PDF', date: '2024-11-03', size: '12.4 MB' },
+      { name: 'Tomteanalyse — arealregnskap', type: 'XLSX', date: '2024-10-28', size: '340 KB' },
+      { name: 'Geoteknisk rapport', type: 'PDF', date: '2024-09-15', size: '3.8 MB' },
+      { name: 'Situasjonsplan skisse', type: 'DWG', date: '2024-11-01', size: '2.2 MB' },
+    ],
+  },
+  {
+    id: 'majorstuen-kvartal',
+    name: 'Majorstuen Kvartal',
+    location: 'Oslo',
+    address: 'Bogstadveien 47, 0366 Oslo',
+    coordinates: [59.9294, 10.7149],
+    status: 'prosjektering',
+    bra: 15800,
+    units: 112,
+    floors: 10,
+    zoningStatus: 'Godkjent reguleringsplan — prosjektering pågår',
+    zoningCode: 'B-3',
+    description:
+      'Transformasjon av tidligere industribygg til moderne boligkvartal på Majorstuen. Prosjektet bevarer fasade mot Bogstadveien og oppfører ny bebyggelse på bakgård.',
+    completionYear: 2026,
+    investmentMNOK: 320,
+    analysis: {
+      sol: {
+        score: 71,
+        label: 'Solforhold',
+        description: 'God soltilgang for søndre leiligheter. Bakgårdsbebyggelse har begrenset direkte sollys om vinteren.',
+      },
+      støy: {
+        score: 45,
+        label: 'Støybelastning',
+        description: 'Trikk og trafikk gir moderate støynivåer mot Bogstadveien. Bakgårds-fasade er tilfredsstillende.',
+      },
+      flom: {
+        score: 88,
+        label: 'Flomrisiko',
+        description: 'Minimal flomrisiko — høyt terreng med god dreneringskapasitet. Grunnforhold svært gode.',
+      },
+      fjernvirkning: {
+        score: 62,
+        label: 'Fjernvirkning',
+        description: 'Moderat synlighet. Innenfor kvartalshøyder, ikke dominerende i bybildet.',
+      },
+    },
+    documents: [
+      { name: 'Rammetillatelse', type: 'PDF', date: '2024-03-14', size: '1.2 MB' },
+      { name: 'Forprosjekt tegninger', type: 'DWG', date: '2024-08-30', size: '48 MB' },
+      { name: 'BIM-koordineringsmodell', type: 'IFC', date: '2024-09-22', size: '214 MB' },
+      { name: 'Energianalyse NS 3700', type: 'PDF', date: '2024-07-11', size: '4.1 MB' },
+      { name: 'SHA-plan rev. 2', type: 'PDF', date: '2024-10-05', size: '890 KB' },
+      { name: 'Fremdriftsplan 2024-2026', type: 'XLSX', date: '2024-10-18', size: '210 KB' },
+    ],
+  },
+  {
+    id: 'lund-terrasse',
+    name: 'Lund Terrasse',
+    location: 'Kristiansand',
+    address: 'Lundsiden 8, 4616 Kristiansand',
+    coordinates: [58.1531, 7.9950],
+    status: 'salg',
+    bra: 11200,
+    units: 88,
+    floors: 8,
+    zoningStatus: 'Ferdig regulert — igangsettingstillatelse mottatt',
+    zoningCode: 'R-4',
+    description:
+      'Attraktivt boligprosjekt på Lund med utsikt over Otra og Kristiansand sentrum. 88 selveierleiligheter over 8 etasjer med felles takterrasse og parkering i underetasje.',
+    completionYear: 2025,
+    investmentMNOK: 225,
+    analysis: {
+      sol: {
+        score: 82,
+        label: 'Solforhold',
+        description: 'Utmerkede solforhold — sydvestvendt tomt med fritt solinnfall hele dagen. Over 5 timer i desember.',
+      },
+      støy: {
+        score: 72,
+        label: 'Støybelastning',
+        description: 'Lavt støynivå — rolig boligstrøk. Noe trafikklyd fra E39 ved fullt utbygd situasjon.',
+      },
+      flom: {
+        score: 90,
+        label: 'Flomrisiko',
+        description: 'Svært lav flomrisiko — høyde over Otra og god fjellgrunn gir utmerkede byggeforhold.',
+      },
+      fjernvirkning: {
+        score: 55,
+        label: 'Fjernvirkning',
+        description: 'Synlig fra sentrum og Gimlemoen. Byggehøyde godt tilpasset eksisterende bebyggelse.',
+      },
+    },
+    documents: [
+      { name: 'Igangsettingstillatelse', type: 'PDF', date: '2024-01-22', size: '980 KB' },
+      { name: 'Salgsprospekt v4', type: 'PDF', date: '2024-04-10', size: '18.2 MB' },
+      { name: 'Kontraktstegninger rev. 5', type: 'DWG', date: '2024-06-30', size: '72 MB' },
+      { name: 'Leveransebeskrivelse', type: 'PDF', date: '2024-04-10', size: '2.4 MB' },
+      { name: 'Salgsstatistikk Q4', type: 'XLSX', date: '2024-12-01', size: '145 KB' },
+    ],
+  },
+]
