@@ -14,6 +14,21 @@
   ::-webkit-scrollbar-thumb:hover { @apply bg-slate-500 dark:bg-gray-600; }
 }
 
+/* Range slider */
+input[type='range'] {
+  @apply w-full h-1.5 rounded-full appearance-none cursor-pointer outline-none;
+}
+input[type='range']::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 rounded-full bg-blue-600 cursor-pointer;
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #3b82f6;
+}
+.dark input[type='range']::-webkit-slider-thumb {
+  box-shadow: 0 0 0 2px #1f2937, 0 0 0 3px #3b82f6;
+}
+input[type='range']::-moz-range-thumb {
+  @apply w-4 h-4 rounded-full bg-blue-600 cursor-pointer border-none;
+}
+
 /* Leaflet overrides — dark map */
 .leaflet-container { background: #0a0f1e !important; }
 .leaflet-control-attribution {

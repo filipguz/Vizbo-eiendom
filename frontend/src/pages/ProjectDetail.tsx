@@ -5,6 +5,7 @@ import { projects } from '../data/projects'
 import StatusBadge from '../components/StatusBadge'
 import ScoreCard from '../components/ScoreCard'
 import ThreeViewer from '../components/ThreeViewer'
+import FinancialCalculator from '../components/FinancialCalculator'
 
 const FILE_TYPE_COLORS: Record<string, string> = {
   PDF:  'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 border-red-200 dark:border-red-500/20',
@@ -120,6 +121,15 @@ export default function ProjectDetail() {
           </div>
         </motion.div>
       </div>
+
+      {/* Financial calculator */}
+      <motion.div
+        className="mb-6"
+        initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, delay: 0.55 }}
+      >
+        <FinancialCalculator project={project} />
+      </motion.div>
 
       {/* Documents */}
       <motion.div
