@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, type Variants } from 'framer-motion'
+import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import { MapPin, Building2, Layers, TrendingUp, ArrowRight, Calendar, Search } from 'lucide-react'
 import { projects as allProjects } from '../data/projects'
 import StatusBadge from '../components/StatusBadge'
 import InvestmentChart from '../components/InvestmentChart'
+import RadarChart from '../components/RadarChart'
 import ActivityFeed from '../components/ActivityFeed'
 import { ProjectStatus } from '../types'
 
@@ -43,6 +44,8 @@ export default function Dashboard() {
     if (search && !p.name.toLowerCase().includes(search.toLowerCase())) return false
     return true
   })
+
+  const [chartTab, setChartTab] = useState<'investering' | 'analyse'>('investering')
 
   const totalBRA        = allProjects.reduce((s, p) => s + p.bra, 0)
   const totalUnits      = allProjects.reduce((s, p) => s + p.units, 0)
@@ -208,8 +211,38 @@ export default function Dashboard() {
           >
             <motion.div variants={fadeUp}
               className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-2xl p-4">
-              <p className="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-4">Investering</p>
-              <InvestmentChart projects={allProjects} />
+              {/* Tab header */}
+              <div className="flex gap-1 mb-4 bg-slate-100 dark:bg-gray-800 rounded-lg p-0.5">
+                {(['investering', 'analyse'] as const).map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setChartTab(tab)}
+                    className={`flex-1 py-1 text-[10px] font-semibold rounded-md capitalize transition-all ${
+                      chartTab === tab
+                        ? 'bg-white dark:bg-gray-700 text-slate-800 dark:text-gray-100 shadow-sm'
+                        : 'text-slate-400 dark:text-gray-600 hover:text-slate-600 dark:hover:text-gray-400'
+                    }`}
+                  >
+                    {tab === 'investering' ? 'Investering' : 'Analyse'}
+                  </button>
+                ))}
+              </div>
+
+              <AnimatePresence mode="wait" initial={false}>
+                {chartTab === 'investering' ? (
+                  <motion.div key="investering"
+                    initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 8 }} transition={{ duration: 0.18 }}>
+                    <InvestmentChart projects={allProjects} />
+                  </motion.div>
+                ) : (
+                  <motion.div key="analyse"
+                    initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.18 }}>
+                    <RadarChart projects={allProjects} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
             <motion.div variants={fadeUp}
               className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-2xl p-4">
