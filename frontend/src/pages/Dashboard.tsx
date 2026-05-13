@@ -45,10 +45,9 @@ export default function Dashboard() {
   return (
     <div className="p-8">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white tracking-tight">Prosjektoversikt</h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Prosjektoversikt</h1>
+          <p className="text-sm text-slate-500 dark:text-gray-500 mt-1">
             {allProjects.length} aktive utviklingsprosjekter · Sist oppdatert 12. mai 2026
           </p>
         </div>
@@ -56,81 +55,66 @@ export default function Dashboard() {
         {/* KPI row */}
         <div className="grid grid-cols-4 gap-4 mb-8">
           <KpiCard label="Aktive prosjekter" value="4"
-            icon={<Building2 size={18} className="text-blue-400" />}
-            sub="+1 siste kvartal" subGreen />
-          <KpiCard label="Totalt BRA" value={`${(totalBRA / 1000).toFixed(1)}k m²`}
-            icon={<Layers size={18} className="text-violet-400" />}
-            sub="59 700 m² samlet" />
+            icon={<Building2 size={18} className="text-blue-500" />} sub="+1 siste kvartal" subGreen />
+          <KpiCard label="Totalt BRA" value={`${(totalBRA/1000).toFixed(1)}k m²`}
+            icon={<Layers size={18} className="text-violet-500" />} sub="59 700 m² samlet" />
           <KpiCard label="Antall enheter" value={totalUnits.toString()}
-            icon={<MapPin size={18} className="text-emerald-400" />}
-            sub="449 leiligheter" />
+            icon={<MapPin size={18} className="text-emerald-500" />} sub="449 leiligheter" />
           <KpiCard label="Totalinvestering" value={`${totalInvestment} MNOK`}
-            icon={<TrendingUp size={18} className="text-amber-400" />}
-            sub="1,19 mrd. NOK" />
+            icon={<TrendingUp size={18} className="text-amber-500" />} sub="1,19 mrd. NOK" />
         </div>
 
-        {/* Main grid: project list + sidebar */}
         <div className="flex gap-5 items-start">
           {/* Left: filters + cards */}
           <div className="flex-1 min-w-0">
             {/* Filter bar */}
             <div className="flex flex-wrap items-center gap-2 mb-5">
-              {/* Search */}
               <div className="relative">
-                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-600" />
+                <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-gray-600" />
                 <input
                   type="text"
                   placeholder="Søk prosjekt…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="bg-gray-900 border border-gray-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-gray-300 placeholder-gray-600 focus:outline-none focus:border-gray-600 w-40"
+                  className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-lg pl-8 pr-3 py-1.5 text-xs text-slate-700 dark:text-gray-300 placeholder-slate-400 dark:placeholder-gray-600 focus:outline-none focus:border-slate-400 dark:focus:border-gray-600 w-40"
                 />
               </div>
 
-              {/* Status pills */}
               <div className="flex gap-1.5">
                 {STATUS_FILTER_LABELS.map(({ value, label }) => (
-                  <button
-                    key={value}
-                    onClick={() => setFilterStatus(value)}
+                  <button key={value} onClick={() => setFilterStatus(value)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       filterStatus === value
                         ? 'bg-blue-600 text-white'
-                        : 'bg-gray-900 text-gray-500 border border-gray-800 hover:text-gray-300 hover:border-gray-700'
-                    }`}
-                  >
+                        : 'bg-white dark:bg-gray-900 text-slate-500 dark:text-gray-500 border border-slate-200 dark:border-gray-800 hover:text-slate-800 dark:hover:text-gray-300 hover:border-slate-300 dark:hover:border-gray-700'
+                    }`}>
                     {label}
                   </button>
                 ))}
               </div>
 
-              {/* City pills */}
               <div className="flex gap-1.5 ml-1">
                 {['alle', ...cities].map((city) => (
-                  <button
-                    key={city}
-                    onClick={() => setFilterCity(city)}
+                  <button key={city} onClick={() => setFilterCity(city)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                       filterCity === city
-                        ? 'bg-gray-700 text-white'
-                        : 'bg-gray-900 text-gray-600 border border-gray-800 hover:text-gray-400 hover:border-gray-700'
-                    }`}
-                  >
+                        ? 'bg-slate-700 dark:bg-gray-700 text-white'
+                        : 'bg-white dark:bg-gray-900 text-slate-500 dark:text-gray-600 border border-slate-200 dark:border-gray-800 hover:text-slate-700 dark:hover:text-gray-400 hover:border-slate-300 dark:hover:border-gray-700'
+                    }`}>
                     {city === 'alle' ? 'Alle byer' : city}
                   </button>
                 ))}
               </div>
 
               {filtered.length !== allProjects.length && (
-                <span className="text-xs text-gray-600 ml-1">
+                <span className="text-xs text-slate-400 dark:text-gray-600 ml-1">
                   {filtered.length} av {allProjects.length} prosjekter
                 </span>
               )}
             </div>
 
-            {/* Project cards */}
             {filtered.length === 0 ? (
-              <div className="text-center py-16 text-gray-600 text-sm">
+              <div className="text-center py-16 text-slate-400 dark:text-gray-600 text-sm">
                 Ingen prosjekter matcher filteret
               </div>
             ) : (
@@ -138,24 +122,20 @@ export default function Dashboard() {
                 {filtered.map((p) => {
                   const stepIdx = STEPS.indexOf(p.status)
                   return (
-                    <div
-                      key={p.id}
-                      className="bg-gray-900 border border-gray-800 rounded-2xl p-5 hover:border-gray-700 transition-all duration-200 group"
-                    >
+                    <div key={p.id}
+                      className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-2xl p-5 hover:border-slate-300 dark:hover:border-gray-700 transition-all duration-200 group">
                       <div className="flex items-start justify-between mb-3">
                         <StatusBadge status={p.status} />
-                        <div className="flex items-center gap-1.5 text-gray-600 text-xs">
-                          <Calendar size={11} />
-                          <span>{p.completionYear}</span>
+                        <div className="flex items-center gap-1.5 text-slate-400 dark:text-gray-600 text-xs">
+                          <Calendar size={11} /><span>{p.completionYear}</span>
                         </div>
                       </div>
 
-                      <h2 className="text-lg font-semibold text-white mb-0.5 group-hover:text-blue-300 transition-colors">
+                      <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-0.5 group-hover:text-blue-600 dark:group-hover:text-blue-300 transition-colors">
                         {p.name}
                       </h2>
-                      <div className="flex items-center gap-1 text-gray-500 text-xs mb-4">
-                        <MapPin size={11} />
-                        <span>{p.address}</span>
+                      <div className="flex items-center gap-1 text-slate-400 dark:text-gray-500 text-xs mb-4">
+                        <MapPin size={11} /><span>{p.address}</span>
                       </div>
 
                       <div className="grid grid-cols-3 gap-3 mb-4">
@@ -165,8 +145,8 @@ export default function Dashboard() {
                       </div>
 
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-xs text-gray-600">Investering</span>
-                        <span className="text-sm font-semibold text-gray-300">{p.investmentMNOK} MNOK</span>
+                        <span className="text-xs text-slate-400 dark:text-gray-600">Investering</span>
+                        <span className="text-sm font-semibold text-slate-700 dark:text-gray-300">{p.investmentMNOK} MNOK</span>
                       </div>
 
                       {/* Progress steps */}
@@ -177,17 +157,12 @@ export default function Dashboard() {
                             const done   = i < stepIdx
                             return (
                               <div key={step} className="flex items-center flex-1">
-                                <div
-                                  className={`w-2.5 h-2.5 rounded-full border-2 transition-all ${
-                                    active
-                                      ? `${STATUS_DOT[p.status]} border-transparent scale-125`
-                                      : done
-                                      ? 'bg-gray-600 border-transparent'
-                                      : 'bg-transparent border-gray-700'
-                                  }`}
-                                />
+                                <div className={`w-2.5 h-2.5 rounded-full border-2 transition-all ${
+                                  active ? `${STATUS_DOT[p.status]} border-transparent scale-125`
+                                         : done ? 'bg-slate-400 dark:bg-gray-600 border-transparent'
+                                                : 'bg-transparent border-slate-300 dark:border-gray-700'}`} />
                                 {i < STEPS.length - 1 && (
-                                  <div className={`flex-1 h-px ${done || active ? 'bg-gray-600' : 'bg-gray-800'}`} />
+                                  <div className={`flex-1 h-px ${done || active ? 'bg-slate-400 dark:bg-gray-600' : 'bg-slate-200 dark:bg-gray-800'}`} />
                                 )}
                               </div>
                             )
@@ -195,20 +170,15 @@ export default function Dashboard() {
                         </div>
                         <div className="flex justify-between mt-1.5">
                           {STEP_LABELS.map((l, i) => (
-                            <span
-                              key={l}
-                              className={`text-[9px] ${i === stepIdx ? 'text-gray-400 font-medium' : 'text-gray-700'}`}
-                            >
+                            <span key={l} className={`text-[9px] ${i === stepIdx ? 'text-slate-600 dark:text-gray-400 font-medium' : 'text-slate-300 dark:text-gray-700'}`}>
                               {l}
                             </span>
                           ))}
                         </div>
                       </div>
 
-                      <Link
-                        to={`/project/${p.id}`}
-                        className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-xs font-medium transition-all border border-gray-700 hover:border-gray-600 group/btn"
-                      >
+                      <Link to={`/project/${p.id}`}
+                        className="flex items-center justify-center gap-2 w-full py-2 px-4 rounded-lg bg-slate-100 dark:bg-gray-800 hover:bg-slate-200 dark:hover:bg-gray-700 text-slate-600 dark:text-gray-300 hover:text-slate-900 dark:hover:text-white text-xs font-medium transition-all border border-slate-200 dark:border-gray-700 hover:border-slate-300 dark:hover:border-gray-600 group/btn">
                         Se prosjektdetaljer
                         <ArrowRight size={13} className="group-hover/btn:translate-x-0.5 transition-transform" />
                       </Link>
@@ -221,17 +191,14 @@ export default function Dashboard() {
 
           {/* Right sidebar */}
           <div className="w-64 flex-none space-y-4">
-            {/* Investment chart */}
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">
+            <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-2xl p-4">
+              <p className="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-4">
                 Investering
               </p>
               <InvestmentChart projects={allProjects} />
             </div>
-
-            {/* Activity feed */}
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-4">
-              <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">
+            <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-2xl p-4">
+              <p className="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-4">
                 Siste aktivitet
               </p>
               <ActivityFeed />
@@ -243,28 +210,26 @@ export default function Dashboard() {
   )
 }
 
-function KpiCard({
-  label, value, icon, sub, subGreen,
-}: {
+function KpiCard({ label, value, icon, sub, subGreen }: {
   label: string; value: string; icon: React.ReactNode; sub: string; subGreen?: boolean
 }) {
   return (
-    <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
+    <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-800 rounded-xl p-4">
       <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-medium text-gray-500">{label}</span>
-        <div className="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center">{icon}</div>
+        <span className="text-xs font-medium text-slate-500 dark:text-gray-500">{label}</span>
+        <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-gray-800 flex items-center justify-center">{icon}</div>
       </div>
-      <p className="text-xl font-bold text-white mb-1">{value}</p>
-      <p className={`text-[10px] ${subGreen ? 'text-emerald-400' : 'text-gray-600'}`}>{sub}</p>
+      <p className="text-xl font-bold text-slate-900 dark:text-white mb-1">{value}</p>
+      <p className={`text-[10px] ${subGreen ? 'text-emerald-500' : 'text-slate-400 dark:text-gray-600'}`}>{sub}</p>
     </div>
   )
 }
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="bg-gray-800/60 rounded-lg px-3 py-2">
-      <p className="text-[10px] text-gray-600 mb-0.5">{label}</p>
-      <p className="text-sm font-semibold text-gray-200">{value}</p>
+    <div className="bg-slate-50 dark:bg-gray-800/60 rounded-lg px-3 py-2">
+      <p className="text-[10px] text-slate-400 dark:text-gray-600 mb-0.5">{label}</p>
+      <p className="text-sm font-semibold text-slate-800 dark:text-gray-200">{value}</p>
     </div>
   )
 }
