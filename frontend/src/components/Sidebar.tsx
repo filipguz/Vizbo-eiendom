@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Map, Building2, Settings, ChevronRight, Sun, Moon, Search } from 'lucide-react'
+import { LayoutDashboard, Map, Settings, ChevronRight, Sun, Moon, Search } from 'lucide-react'
 import { projects } from '../data/projects'
 import { useTheme } from '../context/ThemeContext'
 import { useCommandPalette } from '../context/CommandPaletteContext'
@@ -18,10 +18,7 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-5 py-5 border-b border-slate-200 dark:border-gray-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-blue-600 flex items-center justify-center">
-            <Building2 size={15} className="text-white" />
-          </div>
-          <span className="text-base font-bold tracking-tight text-slate-900 dark:text-white">Vizbo</span>
+          <img src="/vizbo-logo.png" alt="Vizbo" className="h-7 w-auto" />
         </div>
         <p className="text-xs text-slate-400 dark:text-gray-500 mt-1 ml-[38px]">Eiendomsutvikling</p>
       </div>
