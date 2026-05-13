@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom'
-import { LayoutDashboard, Map, Building2, Settings, ChevronRight, Sun, Moon } from 'lucide-react'
+import { LayoutDashboard, Map, Building2, Settings, ChevronRight, Sun, Moon, Search } from 'lucide-react'
 import { projects } from '../data/projects'
 import { useTheme } from '../context/ThemeContext'
+import { useCommandPalette } from '../context/CommandPaletteContext'
 
 const navItems = [
   { to: '/',    icon: LayoutDashboard, label: 'Oversikt' },
@@ -10,6 +11,7 @@ const navItems = [
 
 export default function Sidebar() {
   const { theme, toggle } = useTheme()
+  const { open } = useCommandPalette()
 
   return (
     <aside className="w-56 flex-none flex flex-col bg-white dark:bg-gray-900 border-r border-slate-200 dark:border-gray-800">
@@ -29,6 +31,18 @@ export default function Sidebar() {
         <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400 dark:text-gray-600 px-2 mb-2">
           Navigasjon
         </p>
+        {/* Search trigger */}
+        <button
+          onClick={open}
+          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-500 dark:text-gray-500 hover:text-slate-800 dark:hover:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-800 transition-all duration-150 group mb-1"
+        >
+          <Search size={16} className="flex-none" />
+          <span className="flex-1 text-left">Søk…</span>
+          <kbd className="hidden sm:flex items-center gap-0.5 text-[10px] text-slate-400 dark:text-gray-600 bg-slate-100 dark:bg-gray-800 group-hover:bg-slate-200 dark:group-hover:bg-gray-700 border border-slate-200 dark:border-gray-700 rounded px-1.5 py-0.5 transition-colors">
+            ⌘K
+          </kbd>
+        </button>
+
         {navItems.map(({ to, icon: Icon, label }) => (
           <NavLink
             key={to}
